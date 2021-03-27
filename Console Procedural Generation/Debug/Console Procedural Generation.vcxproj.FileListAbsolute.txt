@@ -1,0 +1,2 @@
+D:\REPOS\PGP\Console Procedural Generation\Debug\Console Procedural Generation.exe
+D:\REPOS\PGP\Console Procedural Generation\Debug\Console Procedural Generation.pdb
