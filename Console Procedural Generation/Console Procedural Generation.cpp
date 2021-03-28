@@ -3,29 +3,53 @@
 
 #include <iostream>
 #include <windows.h>
+#include <random>
 
 using namespace std;
 
 //sets the console window size to x columns and y rows, max 240, 63
 void setConsoleSize(SHORT,SHORT);
 
+HANDLE HANDLE_OUT = GetStdHandle(STD_OUTPUT_HANDLE);
 SHORT SCREEN_SIZE_X = 150;
 SHORT SCREEN_SIZE_Y = 50;
+mt19937_64 RNG(5);
+uniform_int_distribution<unsigned long long> dist(4294967296, 4294967299);
+
 
 int main()
 {
+    /*random_device rd;
+    mt19937_64 gen(rd());*/
+    char c[5] = { 'h', 'e', 'l', 'l', 'o' };
+
     setConsoleSize(SCREEN_SIZE_X,SCREEN_SIZE_Y);
-    for (int i = 0; i < 150; i++)
+
+    /*while (true)
     {
-        cout << 2;
-    }
+        
+        cout << dist(RNG) << endl;
+    }*/
+    /*cout << RNG._Max << endl;
+    cout << RNG.min;*/
+
+    COORD zero = { 40,37 };
+    WriteConsoleA(HANDLE_OUT, c, 5, NULL, NULL);
+
+    SetConsoleCursorPosition(HANDLE_OUT, zero);
+
+    WriteConsoleA(HANDLE_OUT, c, 5, NULL, NULL);
+    zero.X = 43;
+    SetConsoleCursorPosition(HANDLE_OUT, zero);
+
+    WriteConsoleA(HANDLE_OUT, c, 5, NULL, NULL);
+
+    WORD b = FOREGROUND_BLUE;
+    DWORD w = 0;
+
+    WriteConsoleOutputAttribute(HANDLE_OUT, &b, 1, zero, &w);
+
     int a;
-    cin >> a;
-    system("cls");
-    for (int i = 0; i < 49; i++)
-    {
-        cout << i << endl;
-    }
     cin >> a;
 }
 
@@ -33,25 +57,14 @@ int main()
 void setConsoleSize(SHORT x, SHORT y)
 {
     //gets the standard output window
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    
     //creates the coordiante size of the buffer
     COORD buffer_size = { x,y };
     //creates the console display size
     SMALL_RECT DisplayArea = { 0, 0, x - 1, y - 1 };
     
     //sets the size of the Console Buffer
-    SetConsoleScreenBufferSize(hOut, buffer_size);
+    SetConsoleScreenBufferSize(HANDLE_OUT, buffer_size);
     //sets the size of the console window
-    SetConsoleWindowInfo(hOut, true, &DisplayArea);
+    SetConsoleWindowInfo(HANDLE_OUT, true, &DisplayArea);
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
