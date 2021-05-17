@@ -4,6 +4,7 @@
 #include <iostream>
 #include <windows.h>
 #include <random>
+#include "randnum.h"
 
 using namespace std;
 
@@ -11,16 +12,18 @@ using namespace std;
 void setConsoleSize(SHORT,SHORT);
 
 HANDLE HANDLE_OUT = GetStdHandle(STD_OUTPUT_HANDLE);
-SHORT SCREEN_SIZE_X = 150;
-SHORT SCREEN_SIZE_Y = 50;
-mt19937_64 RNG(5);
+SHORT SCREEN_SIZE_X = 180;
+SHORT SCREEN_SIZE_Y = 60;
+//mt19937_64 RNG(5);
 uniform_int_distribution<unsigned long long> dist(4294967296, 4294967299);
-
+uniform_int_distribution<unsigned long long> dist2(0, SCREEN_SIZE_X);
+uniform_int_distribution<unsigned long long> dist3(0, SCREEN_SIZE_Y);
 
 int main()
 {
-    /*random_device rd;
-    mt19937_64 gen(rd());*/
+    random_device rd;
+    mt19937_64 gen(rd());
+
     char c[5] = { 'h', 'e', 'l', 'l', 'o' };
 
     setConsoleSize(SCREEN_SIZE_X,SCREEN_SIZE_Y);
@@ -33,8 +36,12 @@ int main()
     /*cout << RNG._Max << endl;
     cout << RNG.min;*/
 
+    //RNG::GetDiceRoll
+
+    char e[2] = { '\t', 'x' };
+
     COORD zero = { 40,37 };
-    WriteConsoleA(HANDLE_OUT, c, 5, NULL, NULL);
+    WriteConsoleA(HANDLE_OUT, e, 2, NULL, NULL);
 
     SetConsoleCursorPosition(HANDLE_OUT, zero);
 
@@ -49,9 +56,27 @@ int main()
 
     WriteConsoleOutputAttribute(HANDLE_OUT, &b, 1, zero, &w);
 
+    char d[1] = { 'a' };
+    zero.X = 149;
+    zero.Y = 49;
+    SetConsoleCursorPosition(HANDLE_OUT, zero);
+
+    WriteConsoleA(HANDLE_OUT, d, 1, NULL, NULL);
+    WriteConsoleOutputAttribute(HANDLE_OUT, &b, 1, zero, &w);
+    /*while (true)
+    {
+        zero.X = dist2(gen);
+        zero.Y = dist3(gen);
+        SetConsoleCursorPosition(HANDLE_OUT, zero);
+        WriteConsoleA(HANDLE_OUT, d, 1, NULL, NULL);
+        WriteConsoleOutputAttribute(HANDLE_OUT, &b, 1, zero, &w);
+    }*/
+
     int a;
     cin >> a;
 }
+
+
 
 
 void setConsoleSize(SHORT x, SHORT y)
