@@ -139,9 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="ButtonWindow.cpp" />
     <ClCompile Include="Console Procedural Generation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="consoleGUI.h" />
     <ClInclude Include="randnum.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

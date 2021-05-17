@@ -1,10 +1,12 @@
 // Console Procedural Generation.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// http://geosoft.no/development/cppstyle.html#Naming%20Conventions
+// use the above naming conventions as a general guideline
 
 #include <iostream>
 #include <windows.h>
 #include <random>
 #include "randnum.h"
+#include "consoleGUI.h"
 
 using namespace std;
 
@@ -12,8 +14,8 @@ using namespace std;
 void setConsoleSize(SHORT,SHORT);
 
 HANDLE HANDLE_OUT = GetStdHandle(STD_OUTPUT_HANDLE);
-SHORT SCREEN_SIZE_X = 180;
-SHORT SCREEN_SIZE_Y = 60;
+const SHORT SCREEN_SIZE_X = 180;
+const SHORT SCREEN_SIZE_Y = 60;
 //mt19937_64 RNG(5);
 uniform_int_distribution<unsigned long long> dist(4294967296, 4294967299);
 uniform_int_distribution<unsigned long long> dist2(0, SCREEN_SIZE_X);
@@ -38,7 +40,7 @@ int main()
 
     //RNG::GetDiceRoll
 
-    char e[2] = { '\t', 'x' };
+    char e[2] = { '\n', 'x' };
 
     COORD zero = { 40,37 };
     WriteConsoleA(HANDLE_OUT, e, 2, NULL, NULL);
@@ -71,6 +73,44 @@ int main()
         WriteConsoleA(HANDLE_OUT, d, 1, NULL, NULL);
         WriteConsoleOutputAttribute(HANDLE_OUT, &b, 1, zero, &w);
     }*/
+
+    /*while (true)
+    {
+        d[0] = 'a';
+        for (int y = 0; y < SCREEN_SIZE_Y; y++)
+        {
+            for (int x = 0; x < SCREEN_SIZE_X; x++)
+            {
+            
+                zero.X = x;
+                zero.Y = y;
+                SetConsoleCursorPosition(HANDLE_OUT, zero);
+                WriteConsoleA(HANDLE_OUT, d, 1, NULL, NULL);
+            }
+        }
+
+        d[0] = ' ';
+        for (int x = 0; x < SCREEN_SIZE_X; x++)
+        {
+            for (int y = 0; y < SCREEN_SIZE_Y; y++)
+            {
+                zero.X = x;
+                zero.Y = y;
+                SetConsoleCursorPosition(HANDLE_OUT, zero);
+                WriteConsoleA(HANDLE_OUT, d, 1, NULL, NULL);
+            }
+        }
+
+    }*/
+
+    Button buttons[10] = { Button("Attack"), Button("Defend"), Button("Inventory"), Button("Converse"), Button("Question"), Button("Discern"), Button("Misdirect"), Button("Bisexual"), Button("Level Up"), Button("Defeat") };
+    ButtonWindow win = ButtonWindow(buttons, 10);
+
+    std::string display = win.getDisplay(180);
+    zero.X = 0;
+    zero.Y = 50;
+    SetConsoleCursorPosition(HANDLE_OUT, zero);
+    WriteConsoleA(HANDLE_OUT, display.c_str(), display.size(), NULL, NULL);
 
     int a;
     cin >> a;
