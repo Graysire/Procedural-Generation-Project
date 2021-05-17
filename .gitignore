@@ -1,6 +1,9 @@
 # Prerequisites
 *.d
 
+# Unimportant for commit
+/Console .56baa6bb.tlog
+
 # Compiled Object files
 *.slo
 *.lo
